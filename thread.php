@@ -17,44 +17,43 @@
     <?php include 'partials/_header.php'; ?>
 
     <?php
-        $id = $_GET['catid'];
-        $sql = "Select * from `categories` where `category_id`='$id'";
+        $id = $_GET['threadid'];
+        $sql = "Select * from `threads` where `thread_id`='$id'";
         $result = mysqli_query($conn, $sql);
-        while($row = mysqli_fetch_assoc($result)){
-            $catname = $row['category_name'];
-            $catdesc = $row['category_description'];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $threadTitle = $row['thread_title'];
+            $threadDescription = $row['thread_desc'];
         }
     ?>
 
     <div class="container my-5">
         <div class="jumbotron">
-            <h1 class="display-4">Welcome to <?php echo $catname; ?> Forum</h1>
-            <p class="lead"><?php echo $catdesc; ?></p>
+            <h1 class="display-4"> <?php echo $threadTitle; ?> </h1>
+            <p class="lead"><?php echo $threadDescription; ?></p>
             <hr class="my-4">
             <p>This forum is for people to have discussions over knoweledgeable topics.</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            <p><strong>Posted by: Harrison Ford</strong></p>
         </div>
     </div>
     <div class="container my-5">
-        <h2 class="py-2"> Browse topics</h2>
-        <?php
+        <h2 class="py-2"> Discussions</h2>
+        <!-- <?php
         $id = $_GET['catid'];
         $sql = "Select * from `threads` where `thread_category_id`='$id'";
         $result = mysqli_query($conn, $sql);
-        while($row = mysqli_fetch_assoc($result)){
-            $id = $row['thread_id'];
+        while ($row = mysqli_fetch_assoc($result)) {
             $title = $row['thread_title'];
             $username = $row['thread_user_id'];
             $description = $row['thread_desc'];
-        echo '<div class="media-body my-3">
+            echo '<div class="media-body my-3">
             <img src="img/userdefault.png" width="55px" class="mr-3" alt="...">
             <div class="media-body">
-                <h5 class="mt-0"><a class="text-dark" href="/php/forum/thread.php?threadid='. $id . '">'. $title .'</a></h5>
-                <p>' . $description .'</p>
+                <h5 class="mt-0"> <a href="/php/forum/thread.php" class="text-dark">' . $title . '</a></h5>
+                <p>' . $description . '</p>
             </div>';
         }
-        ?>
-        </div>
+        ?> -->
+    </div>
 
     </div>
 
