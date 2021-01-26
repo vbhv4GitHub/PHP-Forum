@@ -17,13 +17,13 @@
     <?php include 'partials/_header.php'; ?>
 
     <?php
-        $id = $_GET['catid'];
-        $sql = "Select * from `categories` where `category_id`='$id'";
-        $result = mysqli_query($conn, $sql);
-        while($row = mysqli_fetch_assoc($result)){
-            $catname = $row['category_name'];
-            $catdesc = $row['category_description'];
-        }
+    $id = $_GET['catid'];
+    $sql = "Select * from `categories` where `category_id`='$id'";
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $catname = $row['category_name'];
+        $catdesc = $row['category_description'];
+    }
     ?>
 
     <div class="container my-5">
@@ -41,21 +41,43 @@
         $id = $_GET['catid'];
         $sql = "Select * from `threads` where `thread_category_id`='$id'";
         $result = mysqli_query($conn, $sql);
-        while($row = mysqli_fetch_assoc($result)){
+        $noResult = true;
+        while ($row = mysqli_fetch_assoc($result)) {
+            $noResult = false;
             $id = $row['thread_id'];
             $title = $row['thread_title'];
             $username = $row['thread_user_id'];
             $description = $row['thread_desc'];
-        echo '<div class="media-body my-3">
+            echo '<div class="media-body my-3">
             <img src="img/userdefault.png" width="55px" class="mr-3" alt="...">
             <div class="media-body">
-                <h5 class="mt-0"><a class="text-dark" href="/php/forum/thread.php?threadid='. $id . '">'. $title .'</a></h5>
-                <p>' . $description .'</p>
+                <h5 class="mt-0"><a class="text-dark" href="/php/forum/thread.php?threadid=' . $id . '">' . $title . '</a></h5>
+                <p>' . $description . '</p>
             </div>';
         }
+        if ($noResult) {
+            echo '<div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                    <p class="display-4">No Topics Were Found.</p>
+                    <p class="lead">Be the first one to start a topic.</p>
+                    </div>
+                </div>';
+        }
         ?>
-        </div>
-
+        <h2 class="py-2">>> Start a discussion</h2>
+        <form class="my-5">
+            <div class="form-group">
+                <label for="threadTitle"> Title</label>
+                <input type="text" class="form-control" id="threadTitle" name="threadTitle" aria-describedby="threadTitle">
+                <small id="threadTitle1" class="form-text text-muted">Keep your title as crisp as possible.</small>
+            </div>
+            <div class="form-group">
+                <label for="threadDescription">Description</label>
+                <textarea class="form-control" id="threadDescription" name="threadDescription" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary my-3">Post</button>
+        </form>
+    </div>
     </div>
 
     <?php include 'partials/_footer.php'; ?>

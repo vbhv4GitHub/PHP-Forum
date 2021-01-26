@@ -41,7 +41,9 @@
         $id = $_GET['catid'];
         $sql = "Select * from `threads` where `thread_category_id`='$id'";
         $result = mysqli_query($conn, $sql);
+        $noResult = true;
         while ($row = mysqli_fetch_assoc($result)) {
+            $noResult = false;
             $title = $row['thread_title'];
             $username = $row['thread_user_id'];
             $description = $row['thread_desc'];
@@ -51,6 +53,14 @@
                 <h5 class="mt-0"> <a href="/php/forum/thread.php" class="text-dark">' . $title . '</a></h5>
                 <p>' . $description . '</p>
             </div>';
+        }
+        if ($noResult) {
+            echo '<div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                    <p class="display-4">No Comments Were Found.</p>
+                    <p class="lead">Be the first one to post a comment.</p>
+                    </div>
+                </div>';
         }
         ?> -->
     </div>
