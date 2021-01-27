@@ -26,6 +26,31 @@
         }
     ?>
 
+<?php
+    // This php block is to add data to database from our submit topic form.
+    $method = $_SERVER['REQUEST_METHOD'];
+    if($method == 'POST'){
+        // Insert the topic details in your Database
+        $content = $_POST['comment'];
+        $userID = 0; // todo: get user ID when user is logged in.
+        // todo: need to fix sql query generating error.
+        $sql = "INSERT INTO `comments` (`comment_id`, `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES (NULL, '$content', '$id', '$userID', current_timestamp())";
+        $result = mysqli_query($conn, $sql);
+        if($result){
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Your comment has been added to the topic successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+        else{
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong> ERROR:</strong> Your comment couldn\'t be added for some reason. We apologize for the inconvinience.'. mysqli_error($conn) .'
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+    } 
+    ?>
+
     <div class="container my-5">
         <div class="jumbotron">
             <h1 class="display-4"> <?php echo $threadTitle; ?> </h1>
@@ -35,23 +60,38 @@
             <p><strong>Posted by: Harrison Ford</strong></p>
         </div>
     </div>
+
+    <div class="container">
+        <h2 class="py-2"> Add your comment to this topic</h2>
+        <form class="my-5" action="<?php $_SERVER['REQUEST_URI'];?>" method="POST">
+            <div class="form-group">
+                <label for="comment">Type your comment here:</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary my-3">Post Comment</button>
+        </form>
+    </div>
+
     <div class="container my-5">
-        <h2 class="py-2"> Discussions</h2>
-        <!-- <?php
-        $id = $_GET['catid'];
-        $sql = "Select * from `threads` where `thread_category_id`='$id'";
+        <h2 class="py-2"> Comments</h2>
+        
+        <?php
+        $id = $_GET['threadid'];
+        $sql = "Select * from `comments` where `thread_id`='$id'";
         $result = mysqli_query($conn, $sql);
         $noResult = true;
         while ($row = mysqli_fetch_assoc($result)) {
             $noResult = false;
-            $title = $row['thread_title'];
-            $username = $row['thread_user_id'];
-            $description = $row['thread_desc'];
+            $id = $row['comment_id'];
+            $content = $row['comment_content'];
+            $time = $row['comment_time'];
+
             echo '<div class="media-body my-3">
             <img src="img/userdefault.png" width="55px" class="mr-3" alt="...">
             <div class="media-body">
-                <h5 class="mt-0"> <a href="/php/forum/thread.php" class="text-dark">' . $title . '</a></h5>
-                <p>' . $description . '</p>
+                <p class="my-0"><strong> Anonymous User </strong>'. $time .' </p>
+                <p>' . $content . '</p>
+            </div>
             </div>';
         }
         if ($noResult) {
@@ -62,7 +102,8 @@
                     </div>
                 </div>';
         }
-        ?> -->
+        ?> 
+        
     </div>
 
     </div>
