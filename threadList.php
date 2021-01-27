@@ -34,7 +34,8 @@
         $thTitle = $_POST['threadTitle'];
         $thDescription = $_POST['threadDescription'];
         $thUserID = 0;
-        $sql = "INSERT INTO `threads` (`thread_id`, `thread_title`, `thread_desc`, `thread_user_id`, `thread_category_id`, `tstamp`) VALUES (NULL, '$thTitle', '$thDescription', '$thUserID', '$id', current_timestamp())";
+        // todo: need to fix sql query generating error.
+        $sql = "INSERT INTO `threads` (`thread_id`, `thread_title`, `thread_desc`, `thread_user_id`, `thread_category_id`, `tstamp`) VALUES (NULL, '$thTitle', '$thDescription', '0', '$id', current_timestamp())";
         $result = mysqli_query($conn, $sql);
         if($result){
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
