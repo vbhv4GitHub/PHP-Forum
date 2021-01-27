@@ -26,6 +26,31 @@
     }
     ?>
 
+    <?php
+    // This php block is to add data to database from our submit topic form.
+    $method = $_SERVER['REQUEST_METHOD'];
+    if($method == 'POST'){
+        // Insert the topic details in your Database
+        $thTitle = $_POST['threadTitle'];
+        $thDescription = $_POST['threadDescription'];
+        $thUserID = 0;
+        $sql = "INSERT INTO `threads` (`thread_id`, `thread_title`, `thread_desc`, `thread_user_id`, `thread_category_id`, `tstamp`) VALUES (NULL, '$thTitle', '$thDescription', '$thUserID', '$id', current_timestamp())";
+        $result = mysqli_query($conn, $sql);
+        if($result){
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Your topic has been added to the forum successfully. Please wait for communit to respond to your topic.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+        else{
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong> ERROR:</strong> Your topic couldn\'t be added to forum. We apologize for inconvinience.'. mysqli_error($conn) .'
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+    } 
+    ?>
+
     <div class="container my-5">
         <div class="jumbotron">
             <h1 class="display-4">Welcome to <?php echo $catname; ?> Forum</h1>
@@ -35,6 +60,23 @@
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </div>
     </div>
+        <div class="container">
+        <h2 class="py-2">>> Start a discussion</h2>
+        <form class="my-5" action="<?php $_SERVER['REQUEST_URI'];?>" method="POST">
+        <!-- $_SERVER['REQUEST_URI'] & $_SERVER['PHP_SELF'] are often used to redirect a form to the same page, but request URI method submits along with the get parameters, where as PHP self method submits a form with get parameters if there's any previous parameters you've provided to that particular page.-->
+            <div class="form-group">
+                <label for="threadTitle"> Title</label>
+                <input type="text" class="form-control" id="threadTitle" name="threadTitle" aria-describedby="threadTitle">
+                <small id="threadTitle1" class="form-text text-muted">Keep your title as crisp as possible.</small>
+            </div>
+            <div class="form-group">
+                <label for="threadDescription">Description</label>
+                <textarea class="form-control" id="threadDescription" name="threadDescription" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary my-3">Post</button>
+        </form>
+        </div>
+
     <div class="container my-5">
         <h2 class="py-2"> Browse topics</h2>
         <?php
@@ -64,19 +106,7 @@
                 </div>';
         }
         ?>
-        <h2 class="py-2">>> Start a discussion</h2>
-        <form class="my-5">
-            <div class="form-group">
-                <label for="threadTitle"> Title</label>
-                <input type="text" class="form-control" id="threadTitle" name="threadTitle" aria-describedby="threadTitle">
-                <small id="threadTitle1" class="form-text text-muted">Keep your title as crisp as possible.</small>
-            </div>
-            <div class="form-group">
-                <label for="threadDescription">Description</label>
-                <textarea class="form-control" id="threadDescription" name="threadDescription" rows="5"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary my-3">Post</button>
-        </form>
+        
     </div>
     </div>
 
