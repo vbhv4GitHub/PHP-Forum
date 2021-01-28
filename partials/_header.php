@@ -50,4 +50,25 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 include '_loginModal.php';
 include '_signupModal.php';
 
+if((isset($_GET['signup']))){
+    if($_GET['signup']=="true"){
+    $alertType = $_GET['alertType'];
+    $message = $_GET['message'];
+    echo '<div class="alert alert-'. $alertType . ' alert-dismissible fade show my-0" role="alert">
+            <strong> '. $message .' </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </button>
+         </div>';
+    }
+    else{
+    $alertType = $_GET['alertType'];
+    $message = $_GET['message'];
+    echo '<div class="alert alert-'. $alertType . ' alert-dismissible fade show my-0" role="alert">
+            <strong> '. $message .' </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </button> 
+        </div>';
+    }
+}
+
 ?>
