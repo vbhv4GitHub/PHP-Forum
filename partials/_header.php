@@ -43,8 +43,8 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         </form>';
 
         if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
-            echo '<div class="mx-2">
-            <div><p class="mx-2 my-0"> Welcome '. $_SESSION['username'] . ' </p></div>
+            echo '<div><p class="text-light mx-2 my-0"> Welcome '. $_SESSION['username'] . ' </p></div>
+            <div class="mx-2">
             <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal"> Logout </button>
             </div>
             </div>
