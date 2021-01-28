@@ -23,6 +23,7 @@
         while ($row = mysqli_fetch_assoc($result)) {
             $threadTitle = $row['thread_title'];
             $threadDescription = $row['thread_desc'];
+            $threadTime = $row['tstamp'];
         }
     ?>
 
@@ -57,7 +58,7 @@
             <p class="lead"><?php echo $threadDescription; ?></p>
             <hr class="my-4">
             <p>This forum is for people to have discussions over knoweledgeable topics.</p>
-            <p><strong>Posted by: Harrison Ford</strong></p>
+            <p><strong>Posted by: Harrison Ford </strong><?php echo $threadTime; ?></p>
         </div>
     </div>
 

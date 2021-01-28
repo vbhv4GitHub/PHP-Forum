@@ -34,7 +34,7 @@
         $thTitle = $_POST['threadTitle'];
         $thDescription = $_POST['threadDescription'];
         $thUserID = 0;
-        // todo: need to fix sql query generating error.
+        // todo: need to fix sql query generating error. probably need to make all text to varchar.
         $sql = "INSERT INTO `threads` (`thread_id`, `thread_title`, `thread_desc`, `thread_user_id`, `thread_category_id`, `tstamp`) VALUES (NULL, '$thTitle', '$thDescription', '0', '$id', current_timestamp())";
         $result = mysqli_query($conn, $sql);
         if($result){
@@ -62,7 +62,7 @@
         </div>
     </div>
         <div class="container">
-        <h2 class="py-2">>> Start a discussion</h2>
+        <h2 class="py-2"> Start a discussion</h2>
         <form class="my-5" action="<?php $_SERVER['REQUEST_URI'];?>" method="POST">
         <!-- $_SERVER['REQUEST_URI'] & $_SERVER['PHP_SELF'] are often used to redirect a form to the same page, but request URI method submits along with the get parameters, where as PHP self method submits a form with get parameters if there's any previous parameters you've provided to that particular page.-->
             <div class="form-group">
@@ -91,11 +91,13 @@
             $title = $row['thread_title'];
             $username = $row['thread_user_id'];
             $description = $row['thread_desc'];
+            $time = $row['tstamp'];
             echo '<div class="media-body my-3">
             <img src="img/userdefault.png" width="55px" class="mr-3" alt="...">
             <div class="media-body">
                 <h5 class="mt-0"><a class="text-dark" href="/php/forum/thread.php?threadid=' . $id . '">' . $title . '</a></h5>
                 <p>' . $description . '</p>
+                <p class="my-0"><strong> Anonymous User </strong>'. $time .' </p>
             </div>';
         }
         if ($noResult) {
