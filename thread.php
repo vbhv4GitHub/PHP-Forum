@@ -62,16 +62,29 @@
         </div>
     </div>
 
-    <div class="container">
-        <h2 class="py-2"> Add your comment to this topic</h2>
-        <form class="my-5" action="<?php $_SERVER['REQUEST_URI'];?>" method="POST">
+    <?php 
+    //Start a discussion form
+    // start_session();
+    if((isset($_SESSION['loggedin'])) && $_SESSION['loggedin']==true){
+    echo ' <div class="container">
+            <h2 class="py-2"> Add your comment to this topic</h2>
+            <form class="my-5" action="' . $_SERVER['REQUEST_URI'] .'" method="POST">
             <div class="form-group">
                 <label for="comment">Type your comment here:</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-primary my-3">Post Comment</button>
-        </form>
-    </div>
+            </form>
+        </div>';
+    }
+    else{
+        echo '<div class = "container">
+            <p class="lead">
+                You must be logged in to post a comment on this topic.
+            </p>
+            </div>';
+    }
+    ?>
 
     <div class="container my-5">
         <h2 class="py-2"> Comments</h2>

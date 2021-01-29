@@ -61,10 +61,14 @@
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </div>
     </div>
-        <div class="container">
-        <h2 class="py-2"> Start a discussion</h2>
-        <form class="my-5" action="<?php $_SERVER['REQUEST_URI'];?>" method="POST">
-        <!-- $_SERVER['REQUEST_URI'] & $_SERVER['PHP_SELF'] are often used to redirect a form to the same page, but request URI method submits along with the get parameters, where as PHP self method submits a form with get parameters if there's any previous parameters you've provided to that particular page.-->
+    
+    <?php 
+    //Start a discussion form
+    // start_session();
+    if((isset($_SESSION['loggedin'])) && $_SESSION['loggedin']==true){
+    echo '<div class="container">
+        <h2 class="py-2"> Start a discussion by creating a topic</h2>
+        <form class="my-5" action="' . $_SERVER['REQUEST_URI'] .'" method="POST">
             <div class="form-group">
                 <label for="threadTitle"> Title</label>
                 <input type="text" class="form-control" id="threadTitle" name="threadTitle" aria-describedby="threadTitle">
@@ -76,7 +80,16 @@
             </div>
             <button type="submit" class="btn btn-primary my-3">Post</button>
         </form>
-        </div>
+    </div>';
+    }
+    else{
+        echo '<div class = "container">
+            <p class="lead">
+                You must be logged in to start a disscussion by creating a topic.
+            </p>
+            </div>';
+    }
+    ?>
 
     <div class="container my-5">
         <h2 class="py-2"> Browse topics</h2>
