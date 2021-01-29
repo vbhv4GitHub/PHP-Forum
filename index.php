@@ -36,13 +36,13 @@
                         <div class="card" style="width: 18rem;">
                             <img src="https://source.unsplash.com/500x500/?' . $category_name . ',coding" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a href="/php/forum/threadList.php?catid='. $category_ID .' style="text-decoration: none;" ">' . $category_name . '</a></h5>
+                                    <h5 class="card-title"><a href="/php/forum/threadList.php?catid='. $category_ID .'" class="text-decoration-none">' . $category_name . '</a></h5>
                                     <p class="card-text">' . substr($category_description, 0, 155) .'...</p>
                                     <!--  Using substring function to trim description. -->
                                     <a href="/php/forum/threadList.php?catid='. $category_ID .'" style="text-decoration: none;" class="btn btn-primary">View Threads</a>
-                                </div>
                             </div>
-                        </div>';
+                        </div>
+                    </div>';
             }
 
             ?>

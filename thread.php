@@ -24,6 +24,13 @@
             $threadTitle = $row['thread_title'];
             $threadDescription = $row['thread_desc'];
             $threadTime = $row['tstamp'];
+            $username4 = $row['thread_user_id'];
+
+            //Fetching the name of the user who posted this particular thread
+            $sql3 = "Select `username` from `users` where `sno`='$username4'";
+            $result3 = mysqli_query($conn, $sql3);
+            $row3 = mysqli_fetch_assoc($result3);
+            $username3 = $row3['username'];
         }
     ?>
 
@@ -58,7 +65,7 @@
             <p class="lead"><?php echo $threadDescription; ?></p>
             <hr class="my-4">
             <p>This forum is for people to have discussions over knoweledgeable topics.</p>
-            <p><strong>Posted by: Harrison Ford </strong><?php echo $threadTime; ?></p>
+            <p><strong>Posted by: <?php echo $username3; ?> </strong><?php echo $threadTime; ?></p>
         </div>
     </div>
 
