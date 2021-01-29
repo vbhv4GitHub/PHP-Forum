@@ -33,9 +33,9 @@
         // Insert the topic details in your Database
         $thTitle = $_POST['threadTitle'];
         $thDescription = $_POST['threadDescription'];
-        $thUserID = 0;
+        $thUserID = $_POST['sno'];
         // todo: need to fix sql query generating error. probably need to make all text to varchar.
-        $sql = "INSERT INTO `threads` (`thread_id`, `thread_title`, `thread_desc`, `thread_user_id`, `thread_category_id`, `tstamp`) VALUES (NULL, '$thTitle', '$thDescription', '0', '$id', current_timestamp())";
+        $sql = "INSERT INTO `threads` (`thread_id`, `thread_title`, `thread_desc`, `thread_user_id`, `thread_category_id`, `tstamp`) VALUES (NULL, '$thTitle', '$thDescription', '$thUserID', '$id', current_timestamp())";
         $result = mysqli_query($conn, $sql);
         if($result){
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -77,6 +77,7 @@
             <div class="form-group">
                 <label for="threadDescription">Description</label>
                 <textarea class="form-control" id="threadDescription" name="threadDescription" rows="4"></textarea>
+                <input type="hidden" id="sno" name="sno" value="' . $_SESSION['user_id'] . '">
             </div>
             <button type="submit" class="btn btn-primary my-3">Post</button>
         </form>
@@ -105,12 +106,19 @@
             $username = $row['thread_user_id'];
             $description = $row['thread_desc'];
             $time = $row['tstamp'];
+
+            //Fetching the name or email of the user who posted the topic
+            $sql2 = "Select `username` from `users` where `sno`='$username'";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
+            $username2 = $row2['username'];
+
             echo '<div class="media-body my-3">
             <img src="img/userdefault.png" width="55px" class="mr-3" alt="...">
-            <div class="media-body">
-                <h5 class="mt-0"><a class="text-dark" href="/php/forum/thread.php?threadid=' . $id . '">' . $title . '</a></h5>
+            <div class="media-body mr-9">
+                <h5 class="mt-0"><a class="text-dark text-decoration-none" href="/php/forum/thread.php?threadid=' . $id . '">' . $title . '</a></h5>
                 <p>' . $description . '</p>
-                <p class="my-0"><strong> Anonymous User </strong>'. $time .' </p>
+                <p class="my-0"><strong> Posted by: '. $username2 .' </strong>'. $time .' </p>
             </div>';
         }
         if ($noResult) {

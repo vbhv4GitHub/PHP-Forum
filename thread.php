@@ -33,7 +33,7 @@
     if($method == 'POST'){
         // Insert the topic details in your Database
         $content = $_POST['comment'];
-        $userID = 0; // todo: get user ID when user is logged in.
+        $userID = $_POST['sno']; 
         // todo: need to fix sql query generating error.
         $sql = "INSERT INTO `comments` (`comment_id`, `comment_content`, `thread_id`, `comment_by`, `comment_time`) VALUES (NULL, '$content', '$id', '$userID', current_timestamp())";
         $result = mysqli_query($conn, $sql);
@@ -72,6 +72,7 @@
             <div class="form-group">
                 <label for="comment">Type your comment here:</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                <input type="hidden" id="sno" name="sno" value="' . $_SESSION['user_id'] . '">
             </div>
             <button type="submit" class="btn btn-primary my-3">Post Comment</button>
             </form>
@@ -99,11 +100,18 @@
             $id = $row['comment_id'];
             $content = $row['comment_content'];
             $time = $row['comment_time'];
+            $username = $row['comment_by'];
+
+            //Fetching the name or email of the user who posted the comment
+            $sql2 = "Select `username` from `users` where `sno`='$username'";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
+            $username2 = $row2['username'];
 
             echo '<div class="media-body my-3">
             <img src="img/userdefault.png" width="55px" class="mr-3" alt="...">
             <div class="media-body">
-                <p class="my-0"><strong> Anonymous User </strong>'. $time .' </p>
+                <p class="my-0"><strong>Posted by: '. $username2 .' </strong>'. $time .' </p>
                 <p>' . $content . '</p>
             </div>
             </div>';

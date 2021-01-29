@@ -21,6 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             session_start();
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
+            $_SESSION['user_id'] = $row['sno'];
             header("location: /php/forum/index.php");
             exit();
         }
