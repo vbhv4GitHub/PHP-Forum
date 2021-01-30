@@ -42,8 +42,8 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             </li>
         </ul>
         
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" action="/php/forum/search.php" action="GET">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-success" type="submit">Search</button>
         </form>';
 
