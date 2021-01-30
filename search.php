@@ -16,17 +16,43 @@
     <?php include 'partials/_dbconnect.php'; ?>
     <?php include 'partials/_header.php'; ?>
 
-    <!-- Search Results code starts here. -->
-    <div class="container my-5">
-        <h1>Search result for <?php $_GET['search']; ?></h1>
-        <div class="results">
-        <h3 class="py-2"><a href="" class="text-decoration-none text-dark"> "Title goes here" </a></h3>
-        <p class="my-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur fugit ipsam quasi nemo excepturi exercitationem porro, harum consequuntur eius error saepe, itaque sint explicabo molestiae dicta laborum! Corporis debitis tenetur officia sed consequatur illo.</p>
-        </div>
-    
-    </div>
+    <?php
 
+    $search_query = $_GET['search'];
+    $sql = "Select * from threads where match (`thread_title`,`thread_desc`) against ('$search_query')";
+    $result = mysqli_query($conn, $sql);
+    $noResult = true;
+    $id=false;
+    while ($row = mysqli_fetch_assoc($result)) {
+        $noResult = false;
+        $title = $row['thread_title'];
+        $id = $row['thread_id'];
+        $description = $row['thread_desc'];
+
+        // Search Results code starts here
+        echo '<div class="container my-5">
+            <h1>Search result for "'. $title .'"</h1>
+            <div class="results">
+                <h3 class="py-2"><a href="/php/forum/thread.php?threadid='.$id.'" class="text-decoration-none text-dark"> "' . $title . '" </a></h3>
+                <p class="my-2">' . $description . '</p>
+            </div>
+        </div>';
+    }
     
+    if($noResult){
+        echo '<div class="container my-5">
+            <h1>Search result for "'. $_GET['search'] .'"</h1>
+            <div class="results">
+                <h3 class="py-2"><a href="#" class="text-decoration-none text-dark"> No Result Found </a></h3>
+                <p class="my-2"> <ul>
+                <li> Make sure you\'ve spelled the query correctly </li>
+                <li> Try different keywords. </li>
+                <li> Try to use more generalized terms. </li>
+                </ul></p>
+            </div>
+        </div>';
+    }
+    ?> 
 
     <?php include 'partials/_footer.php'; ?>
     <!-- Optional JavaScript; choose one of the two! -->
